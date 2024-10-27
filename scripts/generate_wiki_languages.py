@@ -8,10 +8,10 @@ import json
 import requests
 
 
-QUERY_SITEMATRIX = 'https://www.mediawiki.org/w/api.php?action=sitematrix' \
+QUERY_SITEMATRIX = 'https://all.cdn.cnzw.us.kg/https://www.mediawiki.org/w/api.php?action=sitematrix' \
     '&format=json&formatversion=2&smtype=language&smstate=all'
 
-QUERY_LANGLIST = 'https://www.mediawiki.org/w/api.php?action=query&format=json' \
+QUERY_LANGLIST = 'https://all.cdn.cnzw.us.kg/https://www.mediawiki.org/w/api.php?action=query&format=json' \
     '&meta=siteinfo&formatversion=2&siprop=languages%7Clanguagevariants&siinlanguagecode='
 
 QUERY_ALLUSERS = '/w/api.php?action=query&format=json&formatversion=2&list=allusers' \
@@ -65,7 +65,7 @@ for key, value in data[u"sitematrix"].items():
     # At this stage, the language code should be the subdomain of the Wikipedia URL,
     # instead of the "code" field in the sitematrix response.
     # language_code = value[u"code"]
-    language_code = wikipedia_url.replace('https://', '').replace('.wikipedia.org', '')
+    language_code = wikipedia_url.replace('https://', '').replace('zh.wikipedia.cdn.cnzw.us.kg', '')
 
     # TODO: If we want to remove languages with too few active users:
     # allusers = json.loads(requests.get(wikipedia_url + QUERY_ALLUSERS).text)
@@ -74,7 +74,7 @@ for key, value in data[u"sitematrix"].items():
     #    continue
     # Use the AQS API to get total pageviews for this language wiki in the last month:
     date = datetime.today() - timedelta(days=31)
-    unique_device_response = json.loads(requests.get('https://wikimedia.org/api/rest_v1/metrics/unique-devices/' +
+    unique_device_response = json.loads(requests.get('https://all.cdn.cnzw.us.kg/https://wikimedia.org/api/rest_v1/metrics/unique-devices/' +
                                                      wikipedia_url.replace('https://', '') + '/all-sites/monthly/' +
                                                      date.strftime('%Y%m01') + '/' + date.strftime('%Y%m01')).text)
     rank = 0
